@@ -1,95 +1,123 @@
-import React from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-import Navbar from "components/navbar";
-import Sidebar from "components/sidebar";
-import Footer from "components/footer/Footer";
-import routes from "routes";
+import React, { useState, useEffect } from "react";
+import {
+  AppstoreOutlined,
+  BarChartOutlined,
+  FormOutlined,
+  HomeOutlined,
+  LinkOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import type { MenuProps } from "antd";
+import { Layout, theme } from "antd";
+const { Content } = Layout;
+import HeaderAdmin from "../../components/admin/Header";
+import SidebarAdmin from "../../components/admin/Sidebar";
+import { Outlet, NavLink } from "react-router-dom";
+type MenuItem = Required<MenuProps>["items"][number];
 
-export default function Admin(props: { [x: string]: any }) {
-  const { ...rest } = props;
-  const location = useLocation();
-  const [open, setOpen] = React.useState(true);
-  const [currentRoute, setCurrentRoute] = React.useState("Main Dashboard");
-
-  React.useEffect(() => {
-    window.addEventListener("resize", () =>
-      window.innerWidth < 1200 ? setOpen(false) : setOpen(true)
-    );
-  }, []);
-  React.useEffect(() => {
-    getActiveRoute(routes);
-  }, [location.pathname]);
-
-  const getActiveRoute = (routes: RoutesType[]): string | boolean => {
-    let activeRoute = "Main Dashboard";
-    for (let i = 0; i < routes.length; i++) {
-      if (
-        window.location.href.indexOf(
-          routes[i].layout + "/" + routes[i].path
-        ) !== -1
-      ) {
-        setCurrentRoute(routes[i].name);
-      }
-    }
-    return activeRoute;
-  };
-  const getActiveNavbar = (routes: RoutesType[]): string | boolean => {
-    let activeNavbar = false;
-    for (let i = 0; i < routes.length; i++) {
-      if (
-        window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-      ) {
-        return routes[i].secondary;
-      }
-    }
-    return activeNavbar;
-  };
-  const getRoutes = (routes: RoutesType[]): any => {
-    return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route path={`/${prop.path}`} element={prop.component} key={key} />
-        );
-      } else {
-        return null;
-      }
-    });
-  };
-
-  document.documentElement.dir = "ltr";
-  return (
-    <div className="flex h-full w-full">
-      <Sidebar open={open} onClose={() => setOpen(false)} />
-      {/* Navbar & Main Content */}
-      <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
-        {/* Main Content */}
-        <main
-          className={`mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[270px]`}
-        >
-          {/* Routes */}
-          <div className="h-full">
-            <Navbar
-              onOpenSidenav={() => setOpen(true)}
-              brandText={currentRoute}
-              secondary={getActiveNavbar(routes)}
-              {...rest}
-            />
-            <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
-              <Routes>
-                {getRoutes(routes)}
-
-                <Route
-                  path="/"
-                  element={<Navigate to="/admin/default" replace />}
-                />
-              </Routes>
-            </div>
-            <div className="p-3">
-              <Footer />
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-  );
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[]
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  } as MenuItem;
 }
+
+const items: MenuItem[] = [
+  getItem(
+    <NavLink to={"/admin"}>Dashboard</NavLink>,
+    "/admin",
+    <HomeOutlined />
+  ),
+  getItem(
+    <NavLink to={"/admin/user-management"}>User</NavLink>,
+    "/admin/user-management",
+    <UserOutlined />
+  ),
+  getItem("System", "sub1", <AppstoreOutlined />, [
+    getItem(
+      <NavLink to={"/admin/category-management"}>Category</NavLink>,
+      "/admin/category-management"
+    ),
+    getItem(
+      <NavLink to={"/admin/partner-management"}>Partner</NavLink>,
+      "/admin/partner-management"
+    ),
+    getItem(
+      <NavLink to={"/admin/about-me-management"}>About me</NavLink>,
+      "/admin/about-me-management"
+    ),
+  ]),
+  getItem("Links", "sub2", <LinkOutlined />, [
+    getItem(
+      <NavLink to={"/admin/ads-management"}>Ads</NavLink>,
+      "/admin/ads-management"
+    ),
+    getItem(
+      <NavLink to={"/admin/affiliate-links-management"}>
+        Affiliate Links
+      </NavLink>,
+      "/admin/affiliate-links-management"
+    ),
+  ]),
+  getItem(
+    <NavLink to={"/admin/posts-management"}>Posts</NavLink>,
+    "8",
+    <FormOutlined />
+  ),
+  getItem(
+    <NavLink to={"/admin/report-management"}>Report</NavLink>,
+    "9",
+    <BarChartOutlined />
+  ),
+  getItem(
+    <NavLink to={"/admin/setting-management"}>Setting</NavLink>,
+    "10",
+    <SettingOutlined />
+  ),
+];
+
+const AdminLayout = () => {
+  const [collapsed, setCollapsed] = useState(false);
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+  useEffect(() => {}, []);
+  return (
+    <Layout style={{ minHeight: "100vh" }}>
+      <SidebarAdmin
+        collapsed={collapsed}
+        setCollapsed={setCollapsed}
+        items={items}
+      ></SidebarAdmin>
+      <Layout>
+        <HeaderAdmin
+          collapsed={collapsed}
+          setCollapsed={setCollapsed}
+          colorBgContainer={colorBgContainer}
+        ></HeaderAdmin>
+        <Content style={{ margin: "8px 8px" }}>
+          <div
+            className="h-full shadow"
+            style={{
+              padding: 16,
+              minHeight: 360,
+              background: colorBgContainer,
+            }}
+          >
+            <Outlet></Outlet>
+          </div>
+        </Content>
+      </Layout>
+    </Layout>
+  );
+};
+
+export default AdminLayout;

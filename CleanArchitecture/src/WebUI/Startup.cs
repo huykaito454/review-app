@@ -145,7 +145,7 @@ public class Startup
             if (env.IsDevelopment())
             {
                 //spa.UseAngularCliServer(npmScript: "start");
-                spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");//Todo Switch back for SPA Dev
+                spa.UseProxyToSpaDevelopmentServer("http://localhost:5173");//Todo Switch back for SPA Dev
             }
         });
         //loggerFactory.AddLog4Net();
