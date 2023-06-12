@@ -1,17 +1,29 @@
 import { SearchOutlined } from "@ant-design/icons";
 const Header = () => {
   return (
-    <header className="text-main-4 py-4 flex items-center justify-between gap-2 select-none">
-      <div className="logo text-3xl font-medium"># reviewforlife</div>
-      <div className="menu flex items-center justify-end gap-5 font-medium flex-wrap">
-        <span className="cursor-pointer">Computing</span>
-        <span className="cursor-pointer">Mobile</span>
-        <span className="cursor-pointer">Gaming</span>
-        <span className="cursor-pointer">Entertainment</span>
-        <span className="cursor-pointer">News</span>
-        <span className="cursor-pointer">More</span>
+    <header className="text-main-4 flex items-center justify-between gap-2 select-none">
+      <div className="logo text-3xl font-medium">reviewforlife</div>
+      <ul className="menu flex items-center justify-end gap-5  font-medium flex-wrap">
+        <li className="cursor-pointer py-5 border-y-4 border-main-1 hover:border-b-main-3 transition-all ">
+          Computing
+        </li>
+        <li className="cursor-pointer py-5 border-y-4 border-main-1 hover:border-b-main-3 transition-all">
+          Mobile
+        </li>
+        <li className="cursor-pointer py-5 border-y-4 border-main-1 hover:border-b-main-3 transition-all">
+          Gaming
+        </li>
+        <li className="cursor-pointer py-5 border-y-4 border-main-1 hover:border-b-main-3 transition-all">
+          Entertainment
+        </li>
+        <li className="cursor-pointer py-5 border-y-4 border-main-1 hover:border-b-main-3 transition-all">
+          News
+        </li>
+        <li className="cursor-pointer py-5 border-y-4 border-main-1 hover:border-b-main-3 transition-all">
+          More
+        </li>
         <SearchOutlined className="cursor-pointer text-main-3" />
-      </div>
+      </ul>
     </header>
   );
 };

@@ -10,7 +10,7 @@ const UserLayout = () => {
           <Header></Header>
         </div>
       </div>
-      <div className="pt-[68px]">
+      <div className="pt-[72px]">
         <Outlet></Outlet>
       </div>
       <div className="w-full bg-main-2">

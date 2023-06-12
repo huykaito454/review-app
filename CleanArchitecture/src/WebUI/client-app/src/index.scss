@@ -70,3 +70,24 @@ td .ant-table-cell {
     table-layout: fixed !important;
   }
 }
+.ant-rate-star.ant-rate-star-full,
+.ant-rate-star.ant-rate-star-zero,
+.ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+  transition: transform 0s;
+}
+
+.ant-rate-star.ant-rate-star-half.ant-rate-star-active {
+  transform: scale(0.6);
+}
+
+.ant-rate-star.ant-rate-star-full {
+  transform: scale(0.6);
+}
+.ant-rate {
+  li {
+    margin-inline-end: 0px !important;
+  }
+}
+.ant-rate-star.ant-rate-star-zero {
+  transform: scale(0.6);
+}
