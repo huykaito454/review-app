@@ -7,6 +7,8 @@ import {
   MenuFoldOutlined,
 } from "@ant-design/icons";
 import { Dropdown } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../redux/hooks";
 const items: MenuProps["items"] = [
   {
     key: "1",
@@ -22,6 +24,25 @@ const items: MenuProps["items"] = [
 ];
 
 const HeaderAdmin = (props: any) => {
+  const user = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    switch (key) {
+      case "1":
+        navigate("/admin/my-account");
+        break;
+      case "2":
+        handleLogOut();
+        break;
+
+      default:
+        break;
+    }
+  };
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <Header
       className="shadow flex items-center justify-between select-none"
@@ -41,17 +62,12 @@ const HeaderAdmin = (props: any) => {
           height: 64,
         }}
       />
-      <Dropdown className="mr-2" menu={{ items }}>
+      <Dropdown className="mr-2" menu={{ items, onClick }}>
         <a onClick={(e) => e.preventDefault()}>
           <Avatar
             className="cursor-pointer mr-2"
             size="large"
-            src={
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/0/0f/IU_posing_for_Marie_Claire_Korea_March_2022_issue_03.jpg"
-                alt="avatar"
-              />
-            }
+            src={<img src={user.avatar} alt="avatar" />}
           />
         </a>
       </Dropdown>

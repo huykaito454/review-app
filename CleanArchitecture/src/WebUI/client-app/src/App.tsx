@@ -3,26 +3,37 @@ import { Suspense, lazy } from "react";
 
 // Global
 const Loading = lazy(() => import("./components/Loading"));
+
+// Auth
+const AuthLayout = lazy(() => import("./layouts/auth/index"));
+
 // Admin
-const AdminLayout = lazy(() => import("./layouts/admin"));
-const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
-const AdminUser = lazy(() => import("./pages/admin/AdminUser"));
-const AdminCategory = lazy(() => import("./pages/admin/AdminCategory"));
-const AdminPartner = lazy(() => import("./pages/admin/AdminPartner"));
-const AdminAboutMe = lazy(() => import("./pages/admin/AdminAboutMe"));
-const AdminAds = lazy(() => import("./pages/admin/AdminAds"));
-const AdminAffiliateLinks = lazy(
-  () => import("./pages/admin/AdminAffiliateLinks")
-);
-const AdminPosts = lazy(() => import("./pages/admin/AdminPosts"));
-const AdminReport = lazy(() => import("./pages/admin/AdminReport"));
-const AdminSetting = lazy(() => import("./pages/admin/AdminSetting"));
+const AdminLayout = lazy(() => import("./layouts/admin/index"));
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminMonitor from "./pages/admin/AdminMonitor";
+import AdminUser from "./pages/admin/AdminUser";
+import AdminCategory from "./pages/admin/AdminCategory";
+import AdminPartner from "./pages/admin/AdminPartner";
+import AdminAboutMe from "./pages/admin/AdminAboutMe";
+import AdminAds from "./pages/admin/AdminAds";
+import AdminAffiliateLinks from "./pages/admin/AdminAffiliateLinks";
+import AdminPosts from "./pages/admin/AdminPosts";
+import AdminNewPost from "./pages/admin/AdminNewPost";
+import AdminReport from "./pages/admin/AdminReport";
+import AdminSetting from "./pages/admin/AdminSetting";
+import AdminMyAccount from "./pages/admin/AdminMyAccount";
+
+//User
+const UserLayout = lazy(() => import("./layouts/user/index"));
+import UserHome from "./pages/user/UserHome";
 function App() {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
+        <Route path="/login" element={<AuthLayout />}></Route>
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="/admin/" element={<AdminDashboard />}></Route>
+          <Route path="/admin/monitor" element={<AdminMonitor />}></Route>
           <Route path="/admin/user-management" element={<AdminUser />}></Route>
           <Route
             path="/admin/category-management"
@@ -42,6 +53,10 @@ function App() {
             element={<AdminAffiliateLinks />}
           ></Route>
           <Route
+            path="/admin/new-posts-management"
+            element={<AdminNewPost />}
+          ></Route>
+          <Route
             path="/admin/posts-management"
             element={<AdminPosts />}
           ></Route>
@@ -53,6 +68,10 @@ function App() {
             path="/admin/setting-management"
             element={<AdminSetting />}
           ></Route>
+          <Route path="/admin/my-account" element={<AdminMyAccount />}></Route>
+        </Route>
+        <Route path="/" element={<UserLayout />}>
+          <Route path="/" element={<UserHome />}></Route>
         </Route>
         <Route path="/" element={<Navigate to="/" replace />} />
       </Routes>

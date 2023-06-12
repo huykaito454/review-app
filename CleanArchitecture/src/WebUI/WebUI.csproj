@@ -58,6 +58,9 @@
 
     <ItemGroup>
       <Folder Include="client-app\" />
+      <Folder Include="wwwroot\images\partners\" />
+      <Folder Include="wwwroot\images\partners\123123\" />
+      <Folder Include="wwwroot\images\partners\Shoppe\" />
     </ItemGroup>
     
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

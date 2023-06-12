@@ -19,7 +19,7 @@ const SidebarAdmin = (props: any) => {
   return (
     <Sider
       className="select-none"
-      theme="dark"
+      theme="light"
       trigger={null}
       collapsible
       collapsed={props.collapsed}
@@ -27,7 +27,7 @@ const SidebarAdmin = (props: any) => {
     >
       <Menu
         onClick={onClick}
-        theme="dark"
+        theme="light"
         openKeys={openKeys}
         onOpenChange={onOpenChange}
         selectedKeys={[current]}

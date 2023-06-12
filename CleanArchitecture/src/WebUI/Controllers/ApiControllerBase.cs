@@ -1,4 +1,4 @@
-﻿using CleanArchitecture.WebUI.Filters;
+﻿
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,11 +6,17 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CleanArchitecture.WebUI.Controllers;
 
 [ApiController]
-[ApiExceptionFilter]
 [Route("api/[controller]")]
 public abstract class ApiControllerBase : ControllerBase
 {
-    private ISender? _mediator;
+    private IMediator _mediator;
 
-    protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+    protected IMediator Mediator
+    {
+        get
+        {
+            IMediator mediator = _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+            return mediator;
+        }
+    }
 }

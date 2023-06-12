@@ -3,19 +3,69 @@ import {
   AppstoreOutlined,
   BarChartOutlined,
   FormOutlined,
-  HomeOutlined,
   LinkOutlined,
   SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Layout, theme } from "antd";
+import { Layout, Progress, theme } from "antd";
 const { Content } = Layout;
 import HeaderAdmin from "../../components/admin/Header";
 import SidebarAdmin from "../../components/admin/Sidebar";
-import { Outlet, NavLink } from "react-router-dom";
-type MenuItem = Required<MenuProps>["items"][number];
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { handleGetUserData } from "../../redux/user/userThunk";
 
+const AdminLayout = () => {
+  const navigate = useNavigate();
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const [collapsed, setCollapsed] = useState(false);
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+  useEffect(() => {
+    dispatch(handleGetUserData());
+  }, []);
+  if (user.disable || !user) {
+    navigate("/");
+  }
+  return (
+    <>
+      {!user.disable ? (
+        <Layout style={{ minHeight: "100vh" }}>
+          <SidebarAdmin
+            collapsed={collapsed}
+            setCollapsed={setCollapsed}
+            items={items}
+          ></SidebarAdmin>
+          <Layout>
+            <HeaderAdmin
+              collapsed={collapsed}
+              setCollapsed={setCollapsed}
+              colorBgContainer={colorBgContainer}
+            ></HeaderAdmin>
+            <Content style={{ margin: "8px 8px" }}>
+              <div
+                className="h-full shadow"
+                style={{
+                  padding: 16,
+                  minHeight: 360,
+                  background: colorBgContainer,
+                }}
+              >
+                <Outlet></Outlet>
+              </div>
+            </Content>
+          </Layout>
+        </Layout>
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};
+type MenuItem = Required<MenuProps>["items"][number];
 function getItem(
   label: React.ReactNode,
   key: React.Key,
@@ -31,93 +81,59 @@ function getItem(
 }
 
 const items: MenuItem[] = [
+  getItem("Dashboard", "sub1", <AppstoreOutlined />, [
+    getItem(<Link to={"/admin"}>Analysis</Link>, "/admin"),
+    getItem(<Link to={"/admin/monitor"}>Monitor</Link>, "/admin/monitor"),
+  ]),
   getItem(
-    <NavLink to={"/admin"}>Dashboard</NavLink>,
-    "/admin",
-    <HomeOutlined />
-  ),
-  getItem(
-    <NavLink to={"/admin/user-management"}>User</NavLink>,
+    <Link to={"/admin/user-management"}>User</Link>,
     "/admin/user-management",
     <UserOutlined />
   ),
-  getItem("System", "sub1", <AppstoreOutlined />, [
+  getItem("System", "sub2", <AppstoreOutlined />, [
     getItem(
-      <NavLink to={"/admin/category-management"}>Category</NavLink>,
+      <Link to={"/admin/category-management"}>Category</Link>,
       "/admin/category-management"
     ),
     getItem(
-      <NavLink to={"/admin/partner-management"}>Partner</NavLink>,
+      <Link to={"/admin/partner-management"}>Partner</Link>,
       "/admin/partner-management"
     ),
-    getItem(
-      <NavLink to={"/admin/about-me-management"}>About me</NavLink>,
-      "/admin/about-me-management"
-    ),
+    // getItem(
+    //   <Link to={"/admin/about-me-management"}>About me</Link>,
+    //   "/admin/about-me-management"
+    // ),
   ]),
-  getItem("Links", "sub2", <LinkOutlined />, [
+  getItem("Links", "sub3", <LinkOutlined />, [
     getItem(
-      <NavLink to={"/admin/ads-management"}>Ads</NavLink>,
+      <Link to={"/admin/ads-management"}>Ads</Link>,
       "/admin/ads-management"
     ),
     getItem(
-      <NavLink to={"/admin/affiliate-links-management"}>
-        Affiliate Links
-      </NavLink>,
+      <Link to={"/admin/affiliate-links-management"}>Affiliate Links</Link>,
       "/admin/affiliate-links-management"
     ),
   ]),
+  getItem("Articles", "sub4", <FormOutlined />, [
+    getItem(
+      <Link to={"/admin/posts-management"}>View Articles</Link>,
+      "/admin/posts-management"
+    ),
+    getItem(
+      <Link to={"/admin/new-posts-management"}>Add New Article</Link>,
+      "/admin/new-posts-management"
+    ),
+  ]),
   getItem(
-    <NavLink to={"/admin/posts-management"}>Posts</NavLink>,
-    "8",
-    <FormOutlined />
-  ),
-  getItem(
-    <NavLink to={"/admin/report-management"}>Report</NavLink>,
-    "9",
+    <Link to={"/admin/report-management"}>Report</Link>,
+    "/admin/report-management",
     <BarChartOutlined />
   ),
   getItem(
-    <NavLink to={"/admin/setting-management"}>Setting</NavLink>,
-    "10",
+    <Link to={"/admin/setting-management"}>Setting</Link>,
+    "/admin/setting-management",
     <SettingOutlined />
   ),
 ];
-
-const AdminLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-  useEffect(() => {}, []);
-  return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <SidebarAdmin
-        collapsed={collapsed}
-        setCollapsed={setCollapsed}
-        items={items}
-      ></SidebarAdmin>
-      <Layout>
-        <HeaderAdmin
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-          colorBgContainer={colorBgContainer}
-        ></HeaderAdmin>
-        <Content style={{ margin: "8px 8px" }}>
-          <div
-            className="h-full shadow"
-            style={{
-              padding: 16,
-              minHeight: 360,
-              background: colorBgContainer,
-            }}
-          >
-            <Outlet></Outlet>
-          </div>
-        </Content>
-      </Layout>
-    </Layout>
-  );
-};
 
 export default AdminLayout;

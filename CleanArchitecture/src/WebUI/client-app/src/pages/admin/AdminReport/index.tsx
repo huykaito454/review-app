@@ -1,5 +1,7 @@
+import AdminDashboard from "../AdminDashboard";
+
 const AdminReport = () => {
-  return <div>AdminReport</div>;
+  return <AdminDashboard></AdminDashboard>;
 };
 
 export default AdminReport;

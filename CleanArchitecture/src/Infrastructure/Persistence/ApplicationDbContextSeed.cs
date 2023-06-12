@@ -20,8 +20,8 @@ namespace System.Infrastructure.Persistence
             if (!hasAdminRole)
             {
                 await roleManager.CreateAsync(new ApplicationRole("SuperAdmin") { });
-
-                var defaultUser = new ApplicationUser { UserName = "admin@gmail.net", Email = "admin@gmail.net" };
+                await roleManager.CreateAsync(new ApplicationRole("Admin") { });
+                var defaultUser = new ApplicationUser { UserName = "admin@gmail.com", Email = "admin@gmail.com" };
 
                 if (userManager.Users.All(u => u.Id != defaultUser.Id))
                 {

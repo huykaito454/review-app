@@ -39,7 +39,7 @@ public class CustomExceptionHandlerMiddleware
         {
             case ValidationException validationException:
                 code = HttpStatusCode.BadRequest;
-                result = JsonConvert.SerializeObject(validationException.Errors);
+                result = JsonConvert.SerializeObject(validationException.Failures);
                 break;
             case NotFoundException _:
                 code = HttpStatusCode.NotFound;
