@@ -59,7 +59,7 @@ const Post = ({
                   size="small"
                   src={
                     <img
-                      src="https://yt3.googleusercontent.com/mm2-5anuZ6ghmK2zL6QM7wciD6kuupOfOagiAh5vZE1hx9tRhKEXTAExZUUY4PVq2RSw9jBpBQ=s900-c-k-c0x00ffffff-no-rj"
+                      src="/images/avatar/e5edf887-fc44-4f21-a743-bd609d1b2624.jpeg"
                       alt="avatar"
                     />
                   }

@@ -11,18 +11,18 @@ export const partnersSlice = createSlice({
   name: "partners",
   initialState,
   reducers: {
-    setPartners: (state: any, action: PayloadAction<any>) => {
-      return (state = action.payload);
+    setPartners: (_state: any, action: PayloadAction<any>) => {
+      return (_state = action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       handleGetAllPartnerData.fulfilled,
-      (state: any, action: any) => {
+      (_state: any, action: any) => {
         if (action.payload) {
-          return (state = action.payload);
+          return (_state = action.payload);
         } else {
-          return (state = initialState);
+          return (_state = initialState);
         }
       }
     );

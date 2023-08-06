@@ -5,7 +5,7 @@ import GaugeMonitor from "../../../components/admin/Charts/Gauche";
 
 const AdminMonitor = () => {
   return (
-    <div className="flex items-start flex-col gap-4 w-full">
+    <div className="flex items-start flex-col gap-4 page-admin">
       <div className="w-full flex items-center justify-between gap-4">
         <div className="w-2/3 h-[600px]">
           <Card

@@ -4,6 +4,7 @@ import logger from "redux-logger";
 import { usersSlice } from "./users/usersSlice";
 import { categoriesSlice } from "./categories/categoriesSlice";
 import { partnersSlice } from "./partners/partnersSlice";
+import { postsSlice } from "./posts/postsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     users: usersSlice.reducer,
     categories: categoriesSlice.reducer,
     partners: partnersSlice.reducer,
+    posts: postsSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

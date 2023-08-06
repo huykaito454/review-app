@@ -58,14 +58,14 @@ const UpdateAdminPartner = (props: any) => {
         <Form.Item
           label="Name"
           name="name"
-          rules={[{ required: true, message: "Please input your name!" }]}
+          rules={[{ required: true, message: "Please input partner name!" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Path"
           name="path"
-          rules={[{ required: true, message: "Please input your path!" }]}
+          rules={[{ required: true, message: "Please input partner path!" }]}
         >
           <Input />
         </Form.Item>
@@ -73,7 +73,7 @@ const UpdateAdminPartner = (props: any) => {
           label="Description"
           name="description"
           rules={[
-            { required: true, message: "Please input your description!" },
+            { required: true, message: "Please input partner description!" },
           ]}
         >
           <TextArea className="max-h-[200px]" />

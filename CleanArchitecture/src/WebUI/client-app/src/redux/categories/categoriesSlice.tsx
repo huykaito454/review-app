@@ -11,18 +11,18 @@ export const categoriesSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    setCategories: (state: any, action: PayloadAction<any>) => {
-      return (state = action.payload);
+    setCategories: (_state: any, action: PayloadAction<any>) => {
+      return (_state = action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       handleGetAllCategoryData.fulfilled,
-      (state: any, action: any) => {
+      (_state: any, action: any) => {
         if (action.payload) {
-          return (state = action.payload);
+          return (_state = action.payload);
         } else {
-          return (state = initialState);
+          return (_state = initialState);
         }
       }
     );

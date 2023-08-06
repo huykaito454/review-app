@@ -66,7 +66,7 @@ const AdminMyAccount = () => {
         }
         handleEditUser(data);
       })
-      .catch((error) => {
+      .catch((_error) => {
         toastError("Update profile failed");
       });
   };
@@ -87,7 +87,7 @@ const AdminMyAccount = () => {
     }
   };
   return (
-    <div className="flex items-start gap-4 w-full h-full">
+    <div className="flex items-start gap-4 page-admin">
       <div className="w-1/3">
         <Card
           bodyStyle={{ paddingTop: 0 }}
@@ -95,7 +95,7 @@ const AdminMyAccount = () => {
             <SettingOutlined key="setting" />,
             <EditOutlined
               key="edit"
-              onClick={(e: any) => {
+              onClick={(_e: any) => {
                 showModal();
               }}
             />,

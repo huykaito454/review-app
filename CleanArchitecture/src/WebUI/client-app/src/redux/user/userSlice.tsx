@@ -17,11 +17,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(handleGetUserData.fulfilled, (state: any, { payload }) => {
+    builder.addCase(handleGetUserData.fulfilled, (_state: any, { payload }) => {
       if (payload) {
-        return (state = { ...payload });
+        return (_state = { ...payload });
       } else {
-        return (state = { ...initialState });
+        return (_state = { ...initialState });
       }
     });
   },

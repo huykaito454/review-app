@@ -28,7 +28,7 @@ const AdminLayout = () => {
     dispatch(handleGetUserData());
   }, []);
   if (user.disable || !user) {
-    navigate("/");
+    navigate("/login");
   }
   return (
     <>
@@ -114,13 +114,13 @@ const items: MenuItem[] = [
       "/admin/affiliate-links-management"
     ),
   ]),
-  getItem("Articles", "sub4", <FormOutlined />, [
+  getItem("Posts", "sub4", <FormOutlined />, [
     getItem(
-      <Link to={"/admin/posts-management"}>View Articles</Link>,
+      <Link to={"/admin/posts-management"}>All Posts</Link>,
       "/admin/posts-management"
     ),
     getItem(
-      <Link to={"/admin/new-posts-management"}>Add New Article</Link>,
+      <Link to={"/admin/new-posts-management"}>Add New</Link>,
       "/admin/new-posts-management"
     ),
   ]),

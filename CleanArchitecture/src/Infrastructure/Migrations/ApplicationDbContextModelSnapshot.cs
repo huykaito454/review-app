@@ -92,6 +92,58 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("Partners");
                 });
 
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Post", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Author")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Rate")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Thumbnail")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Posts");
+                });
+
             modelBuilder.Entity("CleanArchitecture.Infrastructure.Identity.ApplicationRole", b =>
                 {
                     b.Property<string>("Id")
@@ -293,6 +345,15 @@ namespace CleanArchitecture.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Post", b =>
+                {
+                    b.HasOne("CleanArchitecture.Domain.Entities.Category", "Category")
+                        .WithMany("Posts")
+                        .HasForeignKey("CategoryId");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("CleanArchitecture.Infrastructure.Identity.ApplicationRole", null)
@@ -342,6 +403,11 @@ namespace CleanArchitecture.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CleanArchitecture.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

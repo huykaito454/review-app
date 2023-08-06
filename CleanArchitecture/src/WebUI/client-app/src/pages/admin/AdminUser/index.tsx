@@ -47,7 +47,7 @@ const AdminUser = () => {
       title: "No.",
       key: "id",
       width: 60,
-      render: (value, item, index) => (
+      render: (_value, _item, index) => (
         <>
           <span>{index + 1}</span>
         </>
@@ -171,7 +171,7 @@ const AdminUser = () => {
           handleRegister(data);
         }
       })
-      .catch((error) => {
+      .catch((_error) => {
         toastError("Create user failed");
       });
   };

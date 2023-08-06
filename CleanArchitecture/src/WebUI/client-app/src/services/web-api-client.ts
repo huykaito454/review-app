@@ -481,6 +481,232 @@ export class PartnerClient implements IPartnerClient {
     }
 }
 
+export interface IPostClient {
+    getAll(): Promise<PostList>;
+    update(command: UpdatePostCommand): Promise<boolean>;
+    getPost(query: GetPostQuery): Promise<Post>;
+    delete(id: number): Promise<boolean>;
+}
+
+export class PostClient implements IPostClient {
+    private instance: AxiosInstance;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(baseUrl?: string, instance?: AxiosInstance) {
+
+        this.instance = instance ? instance : axios.create();
+
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+
+    }
+
+    getAll(  cancelToken?: CancelToken | undefined): Promise<PostList> {
+        let url_ = this.baseUrl + "/api/Post";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetAll(_response);
+        });
+    }
+
+    protected processGetAll(response: AxiosResponse): Promise<PostList> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = PostList.fromJS(resultData200);
+            return Promise.resolve<PostList>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<PostList>(null as any);
+    }
+
+    update(command: UpdatePostCommand , cancelToken?: CancelToken | undefined): Promise<boolean> {
+        let url_ = this.baseUrl + "/api/Post";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processUpdate(_response);
+        });
+    }
+
+    protected processUpdate(response: AxiosResponse): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return Promise.resolve<boolean>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+
+    getPost(query: GetPostQuery , cancelToken?: CancelToken | undefined): Promise<Post> {
+        let url_ = this.baseUrl + "/api/Post/path";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(query);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "POST",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetPost(_response);
+        });
+    }
+
+    protected processGetPost(response: AxiosResponse): Promise<Post> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = Post.fromJS(resultData200);
+            return Promise.resolve<Post>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<Post>(null as any);
+    }
+
+    delete(id: number , cancelToken?: CancelToken | undefined): Promise<boolean> {
+        let url_ = this.baseUrl + "/api/Post/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "DELETE",
+            url: url_,
+            headers: {
+                "Accept": "application/json"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processDelete(_response);
+        });
+    }
+
+    protected processDelete(response: AxiosResponse): Promise<boolean> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (let k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
+            return Promise.resolve<boolean>(result200);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<boolean>(null as any);
+    }
+}
+
 export interface IUserClient {
     getUserAccount(): Promise<UserInformation>;
     getAllUserAccount(): Promise<UserListDto>;
@@ -1073,6 +1299,457 @@ export interface IUpdatePartnerCommand {
     image?: string | undefined;
     description?: string | undefined;
     path?: string | undefined;
+}
+
+export class PostList implements IPostList {
+    postDtos?: PostDto[] | undefined;
+
+    constructor(data?: IPostList) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["postDtos"])) {
+                this.postDtos = [] as any;
+                for (let item of _data["postDtos"])
+                    this.postDtos!.push(PostDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PostList {
+        data = typeof data === 'object' ? data : {};
+        let result = new PostList();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.postDtos)) {
+            data["postDtos"] = [];
+            for (let item of this.postDtos)
+                data["postDtos"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPostList {
+    postDtos?: PostDto[] | undefined;
+}
+
+export class PostDto implements IPostDto {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+    thumbnail?: string | undefined;
+    author?: string | undefined;
+    rate?: string | undefined;
+    category?: Category | undefined;
+
+    constructor(data?: IPostDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.path = _data["path"];
+            this.thumbnail = _data["thumbnail"];
+            this.author = _data["author"];
+            this.rate = _data["rate"];
+            this.category = _data["category"] ? Category.fromJS(_data["category"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): PostDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PostDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["path"] = this.path;
+        data["thumbnail"] = this.thumbnail;
+        data["author"] = this.author;
+        data["rate"] = this.rate;
+        data["category"] = this.category ? this.category.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IPostDto {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+    thumbnail?: string | undefined;
+    author?: string | undefined;
+    rate?: string | undefined;
+    category?: Category | undefined;
+}
+
+export abstract class BaseEntity implements IBaseEntity {
+    id?: number;
+    domainEvents?: BaseEvent[] | undefined;
+
+    constructor(data?: IBaseEntity) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            if (Array.isArray(_data["domainEvents"])) {
+                this.domainEvents = [] as any;
+                for (let item of _data["domainEvents"])
+                    this.domainEvents!.push(BaseEvent.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): BaseEntity {
+        data = typeof data === 'object' ? data : {};
+        throw new Error("The abstract class 'BaseEntity' cannot be instantiated.");
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        if (Array.isArray(this.domainEvents)) {
+            data["domainEvents"] = [];
+            for (let item of this.domainEvents)
+                data["domainEvents"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IBaseEntity {
+    id?: number;
+    domainEvents?: BaseEvent[] | undefined;
+}
+
+export abstract class BaseAuditableEntity extends BaseEntity implements IBaseAuditableEntity {
+    created?: Date;
+    createdBy?: string | undefined;
+    lastModified?: Date | undefined;
+    lastModifiedBy?: string | undefined;
+    isDeleted?: boolean;
+
+    constructor(data?: IBaseAuditableEntity) {
+        super(data);
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.created = _data["created"] ? new Date(_data["created"].toString()) : <any>undefined;
+            this.createdBy = _data["createdBy"];
+            this.lastModified = _data["lastModified"] ? new Date(_data["lastModified"].toString()) : <any>undefined;
+            this.lastModifiedBy = _data["lastModifiedBy"];
+            this.isDeleted = _data["isDeleted"];
+        }
+    }
+
+    static override fromJS(data: any): BaseAuditableEntity {
+        data = typeof data === 'object' ? data : {};
+        throw new Error("The abstract class 'BaseAuditableEntity' cannot be instantiated.");
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["created"] = this.created ? this.created.toISOString() : <any>undefined;
+        data["createdBy"] = this.createdBy;
+        data["lastModified"] = this.lastModified ? this.lastModified.toISOString() : <any>undefined;
+        data["lastModifiedBy"] = this.lastModifiedBy;
+        data["isDeleted"] = this.isDeleted;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IBaseAuditableEntity extends IBaseEntity {
+    created?: Date;
+    createdBy?: string | undefined;
+    lastModified?: Date | undefined;
+    lastModifiedBy?: string | undefined;
+    isDeleted?: boolean;
+}
+
+export class Category extends BaseAuditableEntity implements ICategory {
+    id?: number;
+    name?: string | undefined;
+    posts?: Post[] | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+
+    constructor(data?: ICategory) {
+        super(data);
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            if (Array.isArray(_data["posts"])) {
+                this.posts = [] as any;
+                for (let item of _data["posts"])
+                    this.posts!.push(Post.fromJS(item));
+            }
+            this.description = _data["description"];
+            this.path = _data["path"];
+        }
+    }
+
+    static override fromJS(data: any): Category {
+        data = typeof data === 'object' ? data : {};
+        let result = new Category();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        if (Array.isArray(this.posts)) {
+            data["posts"] = [];
+            for (let item of this.posts)
+                data["posts"].push(item.toJSON());
+        }
+        data["description"] = this.description;
+        data["path"] = this.path;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface ICategory extends IBaseAuditableEntity {
+    id?: number;
+    name?: string | undefined;
+    posts?: Post[] | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+}
+
+export class Post extends BaseAuditableEntity implements IPost {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+    thumbnail?: string | undefined;
+    author?: string | undefined;
+    rate?: string | undefined;
+    content?: string | undefined;
+    category?: Category | undefined;
+
+    constructor(data?: IPost) {
+        super(data);
+    }
+
+    override init(_data?: any) {
+        super.init(_data);
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.path = _data["path"];
+            this.thumbnail = _data["thumbnail"];
+            this.author = _data["author"];
+            this.rate = _data["rate"];
+            this.content = _data["content"];
+            this.category = _data["category"] ? Category.fromJS(_data["category"]) : <any>undefined;
+        }
+    }
+
+    static override fromJS(data: any): Post {
+        data = typeof data === 'object' ? data : {};
+        let result = new Post();
+        result.init(data);
+        return result;
+    }
+
+    override toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["path"] = this.path;
+        data["thumbnail"] = this.thumbnail;
+        data["author"] = this.author;
+        data["rate"] = this.rate;
+        data["content"] = this.content;
+        data["category"] = this.category ? this.category.toJSON() : <any>undefined;
+        super.toJSON(data);
+        return data;
+    }
+}
+
+export interface IPost extends IBaseAuditableEntity {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+    thumbnail?: string | undefined;
+    author?: string | undefined;
+    rate?: string | undefined;
+    content?: string | undefined;
+    category?: Category | undefined;
+}
+
+export abstract class BaseEvent implements IBaseEvent {
+
+    constructor(data?: IBaseEvent) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+    }
+
+    static fromJS(data: any): BaseEvent {
+        data = typeof data === 'object' ? data : {};
+        throw new Error("The abstract class 'BaseEvent' cannot be instantiated.");
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        return data;
+    }
+}
+
+export interface IBaseEvent {
+}
+
+export class GetPostQuery implements IGetPostQuery {
+    path?: string | undefined;
+
+    constructor(data?: IGetPostQuery) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.path = _data["path"];
+        }
+    }
+
+    static fromJS(data: any): GetPostQuery {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetPostQuery();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["path"] = this.path;
+        return data;
+    }
+}
+
+export interface IGetPostQuery {
+    path?: string | undefined;
+}
+
+export class UpdatePostCommand implements IUpdatePostCommand {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+    content?: string | undefined;
+    thumbnail?: string | undefined;
+    rate?: string | undefined;
+    category?: number;
+
+    constructor(data?: IUpdatePostCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.path = _data["path"];
+            this.content = _data["content"];
+            this.thumbnail = _data["thumbnail"];
+            this.rate = _data["rate"];
+            this.category = _data["category"];
+        }
+    }
+
+    static fromJS(data: any): UpdatePostCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdatePostCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["path"] = this.path;
+        data["content"] = this.content;
+        data["thumbnail"] = this.thumbnail;
+        data["rate"] = this.rate;
+        data["category"] = this.category;
+        return data;
+    }
+}
+
+export interface IUpdatePostCommand {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    path?: string | undefined;
+    content?: string | undefined;
+    thumbnail?: string | undefined;
+    rate?: string | undefined;
+    category?: number;
 }
 
 export class UserInformation implements IUserInformation {

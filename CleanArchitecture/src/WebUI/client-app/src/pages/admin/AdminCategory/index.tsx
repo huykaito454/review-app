@@ -51,7 +51,7 @@ const AdminCategory = () => {
         }
         handleUpdateCategory(data);
       })
-      .catch((error) => {
+      .catch((_error) => {
         toastError("Create category failed");
       });
   };
@@ -166,7 +166,7 @@ const AdminCategory = () => {
     }
   };
   return (
-    <div className="flex items-start flex-col gap-4 w-full">
+    <div className="flex items-start flex-col gap-4 page-admin">
       <div className="w-full flex flex-row-reverse items-center justify-between">
         <Button
           type="primary"

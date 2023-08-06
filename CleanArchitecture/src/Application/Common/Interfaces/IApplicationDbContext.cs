@@ -9,5 +9,6 @@ public interface IApplicationDbContext
 {
     DbSet<Category> Categories { get; set; }
     DbSet<Partner> Partners { get; set; }
+    DbSet<Post> Posts { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

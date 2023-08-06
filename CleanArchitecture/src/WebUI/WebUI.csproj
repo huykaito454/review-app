@@ -61,6 +61,7 @@
       <Folder Include="wwwroot\images\partners\" />
       <Folder Include="wwwroot\images\partners\123123\" />
       <Folder Include="wwwroot\images\partners\Shoppe\" />
+      <Folder Include="wwwroot\posts\" />
     </ItemGroup>
     
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -70,7 +71,7 @@
         </Exec>
         <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
         <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
-        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm install --force" />
     </Target>
 
     <!-- Auto-generated Open API specification and Angular TypeScript clients -->
@@ -86,7 +87,7 @@
     <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
         <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
         <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build --prod" />
 
         <!-- Include the newly-built files in the publish output -->
         <ItemGroup>

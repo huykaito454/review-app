@@ -17,7 +17,7 @@ const PostList = ({
   const posts = [1, 2, 3, 4, 5];
   return (
     <div className="flex flex-col gap-6">
-      {posts.map((item: any, index: any) => (
+      {posts.map((_item: any, index: any) => (
         <div key={index} className="w-full last:border-b-0 border-b pb-6 ">
           <Post
             colorTextContent={colorTextContent}

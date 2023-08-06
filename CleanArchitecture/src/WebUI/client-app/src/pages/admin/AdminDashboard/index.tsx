@@ -6,7 +6,7 @@ import LiquidChart from "../../../components/admin/Charts/LiquidChart";
 import WorldChart from "../../../components/admin/Charts/WorldChart";
 const AdminDashboard = () => {
   return (
-    <div className="flex items-start flex-col gap-4 w-full h-full">
+    <div className="flex items-start flex-col gap-4 page-admin">
       <div className="w-full flex items-center justify-between gap-4">
         <div className="w-1/2">
           <Card title="Progress">

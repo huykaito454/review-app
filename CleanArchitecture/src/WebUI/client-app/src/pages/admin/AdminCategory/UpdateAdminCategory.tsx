@@ -23,14 +23,14 @@ const UpdateAdminCategory = (props: any) => {
         <Form.Item
           label="Name"
           name="name"
-          rules={[{ required: true, message: "Please input your name!" }]}
+          rules={[{ required: true, message: "Please input category name!" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Path"
           name="path"
-          rules={[{ required: true, message: "Please input your path!" }]}
+          rules={[{ required: true, message: "Please input category path!" }]}
         >
           <Input />
         </Form.Item>
@@ -38,7 +38,7 @@ const UpdateAdminCategory = (props: any) => {
           label="Description"
           name="description"
           rules={[
-            { required: true, message: "Please input your description!" },
+            { required: true, message: "Please input category description!" },
           ]}
         >
           <TextArea className="max-h-[250px]" />

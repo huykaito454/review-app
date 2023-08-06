@@ -26,6 +26,7 @@ import AdminMyAccount from "./pages/admin/AdminMyAccount";
 //User
 const UserLayout = lazy(() => import("./layouts/user/index"));
 import UserHome from "./pages/user/UserHome";
+import PostDetails from "./pages/user/PostDetails";
 function App() {
   return (
     <Suspense fallback={<Loading />}>
@@ -72,6 +73,7 @@ function App() {
         </Route>
         <Route path="/" element={<UserLayout />}>
           <Route path="/" element={<UserHome />}></Route>
+          <Route path="/:category/:post" element={<PostDetails />}></Route>
         </Route>
         <Route path="/" element={<Navigate to="/" replace />} />
       </Routes>
