@@ -36,10 +36,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         _mediator = mediator;
     }
 
-    public DbSet<TodoList> TodoLists { get; set; }
+    public DbSet<Category> Categories { get; set; }
 
-    public DbSet<TodoItem> TodoItems { get; set; }
-
+    public DbSet<Partner> Partners { get; set; }
+    public DbSet<Post> Posts { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

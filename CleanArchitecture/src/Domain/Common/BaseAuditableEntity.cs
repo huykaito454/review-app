@@ -11,4 +11,6 @@ public abstract class BaseAuditableEntity : BaseEntity
     public DateTime? LastModified { get; set; }
 
     public string? LastModifiedBy { get; set; }
+
+    public bool IsDeleted { get; set; }
 }

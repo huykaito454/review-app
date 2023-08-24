@@ -10,16 +10,23 @@ public class ValidationException : Exception
     public ValidationException()
         : base("One or more validation failures have occurred.")
     {
-        Errors = new Dictionary<string, string[]>();
+        Failures = new Dictionary<string, string[]>();
     }
 
     public ValidationException(IEnumerable<ValidationFailure> failures)
         : this()
     {
-        Errors = failures
-            .GroupBy(e => e.PropertyName, e => e.ErrorMessage)
-            .ToDictionary(failureGroup => failureGroup.Key, failureGroup => failureGroup.ToArray());
+        var failureGroups = failures
+            .GroupBy(e => e.PropertyName, e => e.ErrorMessage);
+
+        foreach (var failureGroup in failureGroups)
+        {
+            var propertyName = failureGroup.Key;
+            var propertyFailures = failureGroup.ToArray();
+
+            Failures.Add(propertyName, propertyFailures);
+        }
     }
 
-    public IDictionary<string, string[]> Errors { get; }
+    public IDictionary<string, string[]> Failures { get; }
 }

@@ -1,0 +1,7 @@
+diff a/System/src/WebUI/ViewModel/AuthenticateModel.cs b/System/src/WebUI/ViewModel/AuthenticateModel.cs	(rejected hunks)
+@@ -1,4 +0,4 @@
+-﻿namespace System.WebUI.ViewModel
++﻿namespace System.WebUI
+ {
+     public class AuthenticateModel
+     {
